@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Tarot: Gesture Interface</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+
+    <div id="start-overlay">
+        <h1 style="margin-bottom: 20px;">Arcana Vision</h1>
+        <p style="margin-bottom: 40px; color: #888;">Allow camera access for gesture control</p>
+        <button id="start-btn">Begin Reading</button>
+    </div>
+
+    <div id="ui-layer">
+        <header>
+            <h1>THE MAJOR ARCANA</h1>
+            <p class="subtitle">Swipe to Unfold &bull; Fist to Select</p>
+        </header>
+        
+        <div id="camera-status" title="Camera Status">
+            <div class="status-dot" id="status-dot"></div>
+        </div>
+
+        <div id="gesture-feedback">
+            <div class="gesture-icon">✋</div>
+            <div class="instruction-text" id="instruction-label">Show Hand</div>
+        </div>
+
+        <div id="reading-display">
+            <h2 id="card-name">The Fool</h2>
+            <p id="card-meaning">New beginnings, innocence, spontaneity, a free spirit.</p>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <video id="input-video"></video>
+
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    
+    <!-- MediaPipe Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
