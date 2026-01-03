@@ -4,14 +4,12 @@ import { createTextures } from '../three/textures.js';
 import { createWorld, cards, cursor } from '../three/world.js';
 import { updateAnimation } from '../three/animation.js';
 import { initVision } from '../vision/mediapipe.js';
-import { majorArcana, shuffleDeck } from '../data/tarotData.js';
+import { majorArcana, shuffleDeck } from '../data/arcana.js';
 
 // DOM Elements
 const canvasContainer = document.getElementById('canvas-container');
 const startBtn = document.getElementById('start-btn');
 const overlay = document.getElementById('start-overlay');
-const cardNameEl = document.getElementById('card-name');
-const cardMeaningEl = document.getElementById('card-meaning');
 
 // Shared State
 const appState = {
@@ -29,6 +27,11 @@ const appState = {
         iconEl: document.querySelector('.gesture-icon'),
         textEl: document.getElementById('instruction-label'),
         readingDisplay: document.getElementById('reading-display')
+    },
+    // FIX: Moved DOM references here so they are accessible globally via appState
+    dom: {
+        cardNameEl: document.getElementById('card-name'),
+        cardMeaningEl: document.getElementById('card-meaning')
     }
 };
 
@@ -47,7 +50,7 @@ initVision(appState);
 
 // 5. Event Listeners
 window.addEventListener('resize', () => {
-    const camera = window.CAMERA; // Attached to window for easy access in resize
+    const camera = window.CAMERA;
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     
@@ -58,20 +61,8 @@ window.addEventListener('resize', () => {
 
 startBtn.addEventListener('click', () => {
     const videoElement = document.getElementById('input-video');
-    const cameraUtils = new Camera(videoElement, {
-        onFrame: async () => {
-            // This loop is handled inside mediapipe.js via the `onResults` callback
-            // We just need to start the camera
-        },
-        width: 640,
-        height: 480
-    });
-    
-    // We need to pass the camera instance to the MediaPipe wrapper to trigger sends
-    // But for simplicity in this structure, we attach the camera logic to the global window or pass it back.
-    // Revised approach: initVision will return the camera utility.
-    
     const visionCamera = appState.visionCamera;
+    
     visionCamera.start()
         .then(() => {
             overlay.style.opacity = '0';
