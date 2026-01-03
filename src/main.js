@@ -56,3 +56,39 @@ window.addEventListener('resize', () => {
     composer.setSize(window.innerWidth, window.innerHeight);
 });
 
+startBtn.addEventListener('click', () => {
+    const videoElement = document.getElementById('input-video');
+    const cameraUtils = new Camera(videoElement, {
+        onFrame: async () => {
+            // This loop is handled inside mediapipe.js via the `onResults` callback
+            // We just need to start the camera
+        },
+        width: 640,
+        height: 480
+    });
+    
+    // We need to pass the camera instance to the MediaPipe wrapper to trigger sends
+    // But for simplicity in this structure, we attach the camera logic to the global window or pass it back.
+    // Revised approach: initVision will return the camera utility.
+    
+    const visionCamera = appState.visionCamera;
+    visionCamera.start()
+        .then(() => {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 1000);
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Camera access denied.");
+        });
+});
+
+// 6. Start Animation Loop
+function animate() {
+    requestAnimationFrame(animate);
+    appState.time += 0.01;
+    updateAnimation(appState);
+    composer.render();
+}
+
+animate();
