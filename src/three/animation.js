@@ -103,7 +103,7 @@ function updateCardPositions(appState) {
 }
 
 function selectCard(appState) {
-    let closestDist = 0;
+    let closestDist = Infinity;
     let closestIndex = -1;
 
     cards.forEach((card, i) => {
@@ -134,3 +134,24 @@ function selectCard(appState) {
     }
 }
 
+function resetSelection(appState) {
+    appState.selectedCardIndex = -1;
+    appState.ui.readingDisplay.classList.remove('active');
+    cards.forEach(c => { c.material.forEach(m => m.opacity = 1); });
+    appState.currentState = 'WHEEL';
+}
+
+function updateUI(appState) {
+    const { handData, currentState, ui } = appState;
+    ui.feedbackEl.style.opacity = handData.isHandPresent ? 1 : 0;
+    if (currentState === 'IDLE') {
+        ui.textEl.innerText = "Show Hand & Move Side to Side";
+        ui.iconEl.innerText = "🖐️";
+    } else if (currentState === 'WHEEL') {
+        ui.textEl.innerText = "Make a Fist to Select";
+        ui.iconEl.innerText = "✊";
+    } else if (currentState === 'SELECTED') {
+        ui.textEl.innerText = "Open Hand to Reset";
+        ui.iconEl.innerText = "🖐️";
+    }
+}
