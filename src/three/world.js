@@ -34,6 +34,32 @@ export function createWorld(deckData, { createCardTexture, createBackTexture }) 
         cards.push(mesh);
     });
 
+    // Environment Particles
+    const particlesGeo = new THREE.BufferGeometry();
+    const posArray = new Float32Array(1000 * 3);
+    for(let i=0; i < 3000; i++) posArray[i] = (Math.random() - 0.5) * 30;
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMat = new THREE.PointsMaterial({ 
+        size: 0.05, 
+        color: 0x9B59B6, 
+        transparent: true, 
+        opacity: 0.8, 
+        blending: THREE.AdditiveBlending 
+    });
+    const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particlesMesh);
 
+    // Cursor
+    const cursorGeo = new THREE.RingGeometry(0.3, 0.35, 32);
+    const cursorMat = new THREE.MeshBasicMaterial({ 
+        color: 0xFFD700, 
+        side: THREE.DoubleSide, 
+        transparent: true, 
+        opacity: 0.8 
+    });
+    cursor = new THREE.Mesh(cursorGeo, cursorMat);
+    cursor.position.z = 5;
+    scene.add(cursor);
 }
 
+export { cards, cursor };
