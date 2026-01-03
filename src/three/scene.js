@@ -31,6 +31,15 @@ export function initScene(container) {
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
 
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0x404040, 2);
+    scene.add(ambientLight);
+    const pointLight = new THREE.PointLight(0x9B59B6, 2, 50);
+    pointLight.position.set(0, 5, 5);
+    scene.add(pointLight);
+    const goldLight = new THREE.PointLight(0xFFD700, 1, 20);
+    goldLight.position.set(5, -5, 5);
+    scene.add(goldLight);
 }
 
 export { scene, camera, renderer, composer };
