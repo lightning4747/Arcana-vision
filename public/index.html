@@ -1,32 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Arcana Vision</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcana Vision</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../src/core/style.css">
 
-  <link rel="stylesheet" href="../style.css" />
+    <!-- Import Map for Dependencies (CDN) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.146.0/examples/jsm/",
+                "@mediapipe/camera_utils": "https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js",
+                "@mediapipe/hands": "https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+            }
+        }
+    </script>
 </head>
 <body>
 
-  <div id="start-overlay">
-    <h1>Arcana Vision</h1>
-    <button id="start-btn">Begin Reading</button>
-  </div>
+    <!-- Start Screen -->
+    <div id="start-overlay">
+        <h1 style="margin-bottom: 20px;">Arcana Vision</h1>
+        <p style="margin-bottom: 40px; color: #888;">Mirroring enabled. Move hand to control deck.</p>
+        <button id="start-btn">Begin Reading</button>
+    </div>
 
-  <div id="ui-layer">…</div>
-  <div id="canvas-container"></div>
-  <video id="input-video"></video>
+    <!-- UI Layer -->
+    <div id="ui-layer">
+        <header>
+            <h1>THE MAJOR ARCANA</h1>
+            <p class="subtitle">Swipe Hand to Unfold &bull; Make Fist to Select</p>
+        </header>
+        
+        <div id="camera-status" title="Camera Status">
+            <div class="status-dot" id="status-dot"></div>
+        </div>
 
-  <!-- deps -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/EffectComposer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/RenderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+        <div id="gesture-feedback">
+            <div class="gesture-icon">✋</div>
+            <div class="instruction-text" id="instruction-label">Show Hand</div>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+        <div id="reading-display">
+            <h2 id="card-name">The Fool</h2>
+            <p id="card-meaning">New beginnings, innocence, spontaneity, a free spirit.</p>
+        </div>
+    </div>
 
-  <script type="module" src="../src/main.js"></script>
+    <!-- 3D Scene Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Video Source for Vision -->
+    <video id="input-video"></video>
+
+    <!-- Application Entry Point -->
+    <script type="module" src="../src/core/main.js"></script>
 </body>
 </html>
